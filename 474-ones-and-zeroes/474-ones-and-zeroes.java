@@ -1,5 +1,6 @@
 class Solution {
     
+    /*
     // approach 1 - recursive - TLE code so we add dp cache
     int dp[][][] = null;
     public int findMaxForm(String[] strs, int m, int n) {
@@ -41,7 +42,8 @@ class Solution {
         return dp[m][n][index];
 
     }
-    
+    */
+    // helper method
     private int[] countOnesZeros(String str){
         int[] counts = new int[2];
         
@@ -52,5 +54,34 @@ class Solution {
                 counts[1]++;
         }
         return counts;
+    }
+    
+    // approach 2
+    public int findMaxForm(String[] strs, int m, int n) {
+                
+        int[][] strFrequency = new int[strs.length][2];
+        int pos = 0;
+        
+        for (String currStr : strs) {
+            strFrequency[pos] = countOnesZeros(currStr);
+            pos++;
+        }
+        
+        int[][] dp = new int[m+1][n+1];
+
+        for (int i = 0; i < strs.length; i++){
+            int zeroFreq = strFrequency[i][0];            
+            int oneFreq = strFrequency[i][1];
+            
+            for (int k = m; k >= zeroFreq; k--) {
+                
+                for (int j = n; j >= oneFreq; j--){
+                    
+                    dp[k][j] = Math.max(dp[k][j], dp[k-zeroFreq][j-oneFreq] + 1);
+                }
+            }
+        }
+        
+        return dp[m][n];
     }
 }
