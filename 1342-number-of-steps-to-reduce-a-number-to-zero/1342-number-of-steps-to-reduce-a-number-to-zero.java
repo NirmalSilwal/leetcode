@@ -6,7 +6,9 @@ class Solution {
         
         while (num != 0) {
             if (num % 2 == 0){
-                num /= 2;
+                // num /= 2;
+                // using right shift operator
+               num = num >> 1;
             } else {
                 num--;
             }
