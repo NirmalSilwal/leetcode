@@ -1,0 +1,3 @@
+- one quick approach that comes to mind is using hashset. from i = 0 to length of string and j = i +1 to length of string we check for every substring. while forming the substring, we will put each character in the hasset and if found in hashset, that means our current substring now have repeating character so we capture the value before that on how many characters were there. This is brute force way whose time can go upto O(N^2) and O(N) space for hashset usage.
+​
+-
