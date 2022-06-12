@@ -1,0 +1,3 @@
+the quick O(N^2) solution that comes to mind is that we find every possible subarray that are unique, for that we can use hashset to store the key element, for each unique subarray we find their total sum and compare with our maxsum result - since our constraints is 10^5, so in worst case this approach will take 10^10 time which will not be accepted
+​
+let's first code the brute force solution and will eventually build up the solution to optimise it. let's see what we can get out of it....
