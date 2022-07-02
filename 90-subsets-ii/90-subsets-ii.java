@@ -1,4 +1,7 @@
 class Solution {
+    
+    // recursive solution with extra O(N) space
+    /*
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         Set<List<Integer>> set = new HashSet<>();
         
@@ -26,4 +29,34 @@ class Solution {
         
         findCombinations(nums, index + 1, tempList, set);
     }
+    */
+    
+    // 2nd approach without using set
+    
+      public List<List<Integer>> subsetsWithDup(int[] nums) {        
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+          
+        findCombinations2(nums, 0, new ArrayList<Integer>(), result);
+                
+        return result;
+    }
+    
+        private void findCombinations2(int[] nums, int index, ArrayList<Integer> templist, List<List<Integer>> result) {
+            result.add(new ArrayList<>(templist));
+            
+            for (int i = index; i < nums.length; i++) {
+                
+                // ignore duplicates
+                if (i > index && nums[i] == nums[i-1])
+                    continue;
+                
+                templist.add(nums[i]);
+                
+                findCombinations2(nums, i+1, templist, result);
+                
+                templist.remove(templist.size() - 1);
+            }
+        }
+    
 }
