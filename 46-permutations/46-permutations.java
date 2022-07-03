@@ -4,12 +4,12 @@ class Solution {
         
         boolean[] map = new boolean[nums.length];
         
-        findPermutations(nums, 0, new ArrayList<Integer>(), map, result);
+        findPermutations(nums, new ArrayList<Integer>(), map, result);
         
         return result;
     }
     
-    private void findPermutations(int[] nums, int index, List<Integer> templist, boolean[] map, List<List<Integer>> result) {
+    private void findPermutations(int[] nums, List<Integer> templist, boolean[] map, List<List<Integer>> result) {
         // when permutation if formed
         if (templist.size() == nums.length) {
             result.add(new ArrayList<>(templist));
@@ -23,7 +23,7 @@ class Solution {
                 
                 templist.add(nums[i]);
                 
-                findPermutations(nums, index + 1, templist, map, result);
+                findPermutations(nums, templist, map, result);
                 
                 // backtrack
                 templist.remove(templist.size() - 1);
