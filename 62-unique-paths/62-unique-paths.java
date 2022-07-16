@@ -41,7 +41,7 @@ class Solution {
     // approach 2 optimization: DP with recursion
     public int uniquePaths(int m, int n) {
         
-        return uniquePathsTopDownDP(0, 0, m, n, new int[m+1][n+1]);
+        return uniquePathsTopDownDP(0, 0, m, n, new int[m][n]);
     }
     
     private int uniquePathsTopDownDP(int currRow, int currCol, int m, int n, int[][] storage) {
