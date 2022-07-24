@@ -1,0 +1,2 @@
+- since the input in sorted in row and column, I am getting the intuition that somewhere we can use binary search here to solve it efficiently
+- let's try brute force O(N^2) solution also, solving each row and column element, here at worse it could go upto 9*10^4 runtime
