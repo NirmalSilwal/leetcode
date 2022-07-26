@@ -1,0 +1,2 @@
+- one approach is that we can store the path to reach each p and q in some data structure like array. Now we can traverse both array with path to p and q, we compare node value by parallel traversal in both array and when the node value mismatch we return previous node value
+- now optimising the space complexity
