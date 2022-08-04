@@ -70,6 +70,7 @@ class Solution {
         K is max length of string
     */
     
+    /*
     public List<List<String>> groupAnagrams(String[] strs) {
        
         List<List<String>> result = new ArrayList<>();
@@ -95,4 +96,40 @@ class Solution {
         
         return result;
     }
+    */
+    
+    // 3rd approach - most optimal one
+        public List<List<String>> groupAnagrams(String[] strs) {
+            
+            List<List<String>> result = new ArrayList<>();
+            Map<String, List<String>> map = new HashMap<>();
+             
+            // instead of sorting individual strings we make different string representation using
+            // count of characters and make it key in our hashmap, rather than making
+            // sorted string as our key like in 2nd approach
+            
+            for (String current : strs) {
+                
+                int[] count = new int[26];
+                for (char ch : current.toCharArray()) {
+                    count[ch - 'a']++;
+                }
+                
+                // now generating key from above count
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < 26; i++) {
+                    sb.append(count[i]);
+                    sb.append("#"); // some delimiter only to make unique key in map, nothing fancy
+                }
+                String mykey = sb.toString();
+                
+                map.putIfAbsent(mykey, new ArrayList<>());
+                
+                map.get(mykey).add(current);
+            }
+            
+            result.addAll(map.values());
+            
+            return result;
+        }
 }
