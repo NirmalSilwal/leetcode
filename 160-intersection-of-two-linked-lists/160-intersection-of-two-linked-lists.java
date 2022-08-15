@@ -11,27 +11,22 @@
  */
 public class Solution {
     
-    // O(m+n) time, O(N) space 
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null) return null;
         
-        ListNode temp1 = headA;
-        ListNode temp2 = headB;
-        Map<ListNode, Integer> map = new HashMap<>();
+        Map<ListNode, ListNode> map = new HashMap<>();
+        ListNode temp1 = headA, temp2 = headB;
         
-        // storing all nodes of 1st list in hashmap
         while (temp1 != null) {
-            map.put(temp1, temp1.val);
+            map.put(temp1, temp1.next);
             temp1 = temp1.next;
         }
         
-        // traverse 2nd list and see if it's node is already in hashmap
         while (temp2 != null) {
             if (map.containsKey(temp2))
                 return temp2;
             temp2 = temp2.next;
         }
-        // if node is not found in hashmap already it means there is no intersection
+        
         return null;
     }
 }
