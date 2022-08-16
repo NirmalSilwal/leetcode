@@ -15,6 +15,8 @@ class Node {
 
 class Solution {
     // approach 1 using extra space O(N)
+    // O(N) Time, O(N) space
+    /*
     public Node copyRandomList(Node head) {
         if (head == null) return head;
         
@@ -30,9 +32,8 @@ class Solution {
         
         // now making connection of next and random pointer
         temp = head;
+        
         while (temp != null) {
-            // Node currentNext = temp.next;
-            // Node currentRandom = temp.random;
             
             Node deepcopy = map.get(temp);
             deepcopy.next = map.get(temp.next);
@@ -43,12 +44,58 @@ class Solution {
         
         return map.get(head);
     }
+    */
     
-//     private void display(Node head) {
-//         while (head != null) {
-//             System.out.print(head.val + " ");
-//             head = head.next;
-//         }
-//         System.out.println();
-//     }
+    // optimal approach- O(N) time, O(1) space
+    
+     public Node copyRandomList(Node head) {
+        if (head == null) return head;
+         
+         // 1st make deep copy of each node with next of original node pointing to its deep copy
+         // and next of deep copy pointing to next of current original node
+         
+         Node temp = head;
+         while (temp != null) {
+             Node front = temp.next;
+             
+             Node deepcopy = new Node(temp.val);
+             temp.next = deepcopy;
+             deepcopy.next = front;
+            
+             temp = front;
+         }
+         
+         // adjust random pointer in deepcopy
+         temp = head;
+         while (temp != null) {
+             // as current node points to deep copy and
+             // deep copy next is pointing to current pointer next in original position
+             Node front = temp.next.next; 
+             
+             // random pointer of deepcopy = random of current node 
+             // and next will point to deep copy of random node
+             if (temp.random != null) 
+                temp.next.random = temp.random.next; // this adjusts random ptr in deepcopy node
+             
+             temp = front; // temp = temp.next step as usual
+         }
+         
+         // lastly, adjust the next pointer in original list as well as in deepcopy
+         Node dummyHead = new Node(-1);
+         Node dummy = dummyHead;
+         temp = head;
+         
+         while (temp != null) {
+             Node front = temp.next.next;
+             dummy.next = temp.next;
+             
+             temp.next = front;
+             
+             dummy = dummy.next;
+             temp = front;
+         }
+         
+         return dummyHead.next;
+     }
+    
 }
