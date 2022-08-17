@@ -15,7 +15,7 @@
  */
 class Solution {
     
-    // 1st approach
+    // 1st approach - recursive with range
     /*
     public boolean isValidBST(TreeNode root) {
        return validateBST(root, null, null);
@@ -37,7 +37,8 @@ class Solution {
     }
     */
     
-    // 2nd approach
+    // 2nd approach - inorder recursive
+    /*
     Integer previous = null;
     public boolean isValidBST(TreeNode root) {
         return inorder(root);   
@@ -56,5 +57,40 @@ class Solution {
         previous = root.val;
         
         return inorder(root.right);
+    }
+    */
+    
+    // 3rd approach - iterative with range
+    private Deque<TreeNode> stack = new LinkedList<>();
+    private Deque<Integer> lowRange = new LinkedList<>();
+    private Deque<Integer> highRange = new LinkedList<>();
+        
+    private void update(TreeNode root, Integer low, Integer high) {
+        stack.add(root);
+        lowRange.add(low);
+        highRange.add(high);
+    }
+    
+    public boolean isValidBST(TreeNode root) {
+        
+        Integer low = null, high = null;
+        update(root, low, high); // initialization
+        
+        while (!stack.isEmpty()) {
+            root = stack.poll();
+            low = lowRange.poll();
+            high = highRange.poll();
+            
+            if (root == null)
+                continue;
+            
+            if ((low != null && root.val <= low) || (high != null && root.val >= high))
+                return false;
+            
+            update(root.left, low, root.val);
+            update(root.right, root.val, high);
+        }
+        
+        return true;
     }
 }
