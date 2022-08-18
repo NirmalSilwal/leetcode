@@ -43,11 +43,12 @@ class Solution {
     }
     */
     
-    // 2nd approach:  iterative solution
+    // 2nd approach: iterative solution
+    /*
     public List<Integer> inorderTraversal(TreeNode root) {
         
-        List<Integer> traversals = new ArrayList<>();
         Stack<TreeNode> stack = new Stack<>();
+        List<Integer> traversals = new ArrayList<>();
         TreeNode currentNode = root;
         
         while (currentNode != null || !stack.isEmpty()) {
@@ -59,9 +60,46 @@ class Solution {
             
             currentNode = stack.pop();
             traversals.add(currentNode.val);
-            currentNode = currentNode.right;
+            currentNode = currentNode.right;            
         }
+        
         return traversals;
     }
+    */
+    
+    // 3rd approach - Morris Traversal
+    public List<Integer> inorderTraversal(TreeNode root) {
         
+        List<Integer> traversals = new ArrayList<>();
+        TreeNode curr = root;
+        
+        while (curr != null) {
+            // case 1: if right-skewed tree initially
+            if (curr.left == null) {
+                traversals.add(curr.val);
+                curr = curr.right;
+            } else {
+                // if there exists left subtree
+                // go to left subtree and find node which will be visited last in inorder 
+                TreeNode prev = curr.left;
+                while (prev.right != null && prev.right != curr) {
+                    prev = prev.right;
+                }
+                
+                if (prev.right == null) {
+                    // create a thread
+                    prev.right = curr;
+                    curr = curr.left; // do the traversal
+                } else {
+                    // remove the thread and visit right
+                    prev.right = null;
+                    traversals.add(curr.val);
+                    curr = curr.right;
+                }
+            }
+        }
+        
+        return traversals;
+    }
+
 }
