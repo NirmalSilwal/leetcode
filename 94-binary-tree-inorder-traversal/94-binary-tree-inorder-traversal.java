@@ -15,6 +15,7 @@
  */
 class Solution {
     // 1st approach: recursive solution
+    /*
     public List<Integer> inorderTraversal(TreeNode root) {
         
         List<Integer> traversals = new ArrayList<>();
@@ -40,4 +41,27 @@ class Solution {
         
         inorder(root.right, traversals);
     }
+    */
+    
+    // 2nd approach:  iterative solution
+    public List<Integer> inorderTraversal(TreeNode root) {
+        
+        List<Integer> traversals = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode currentNode = root;
+        
+        while (currentNode != null || !stack.isEmpty()) {
+            
+            while (currentNode != null) {
+                stack.push(currentNode);
+                currentNode = currentNode.left;
+            }
+            
+            currentNode = stack.pop();
+            traversals.add(currentNode.val);
+            currentNode = currentNode.right;
+        }
+        return traversals;
+    }
+        
 }
