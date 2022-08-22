@@ -14,8 +14,9 @@
  * }
  */
 class Solution {
-    // one idea can be to first do level order traversals and then reverse odd index output
    
+    // one idea can be to first do level order traversals and then reverse odd index output
+   /*
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         
         List<List<Integer>> levelOrder = new ArrayList<>();
@@ -61,5 +62,39 @@ class Solution {
             low++;
             high--;
         }
+    }
+    */
+    // approach 2 using DFS
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {        
+        
+        List<List<Integer>> levelOrder = new ArrayList<>();
+        
+        if (root == null) return levelOrder;
+        
+        dfs(root, 1, levelOrder);
+        
+        return levelOrder;
+    }
+      
+    private void dfs(TreeNode root, int level, List<List<Integer>> levelOrder) {
+        
+        if (root == null) return;
+        
+        if (levelOrder.size() < level) {
+            levelOrder.add(new ArrayList<>());
+        }
+        
+        // since we start our level from 1 in our case, every even level has to be in reverse order
+        if (level % 2 == 0) {
+            levelOrder.get(level - 1).add(0, root.val); // for zigzag
+        } else {
+            levelOrder.get(level - 1).add(root.val);
+        }
+        
+        if (root.left != null)
+            dfs(root.left, level + 1, levelOrder);
+        
+        if (root.right != null)
+            dfs(root.right, level + 1, levelOrder);
     }
 }
