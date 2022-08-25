@@ -56,19 +56,20 @@ class Solution {
     }
     */
     
-    // follow up - O(1) space
+    // follow up - O(1) space, O(N) time
     public Node connect(Node root) { 
-        if (root == null) 
-            return root;   
-
+        
+        if (root == null) return root;
+        
         Node head = root;
         
-        // build linked list
         while (head != null) {
             
-            Node dummy = new Node();
-            Node temp = dummy;
+            Node dummyNodeHead = new Node();
+            Node temp = dummyNodeHead;
             
+            // while traversing head in upper level, we process links in next level with temp pointer
+            // for each level, traverse like linkedlist and form connection of next pointer
             while (head != null) {
                 if (head.left != null) {
                     temp.next = head.left;
@@ -80,9 +81,17 @@ class Solution {
                 }
                 head = head.next;
             }
-            // start from next level
-            head = dummy.next;
+            
+            // now we reach the end of current level indicated by head pointer to null
+            // now we have to point head to first node in next level
+            // since dummyNodeHead was at first position in each level, 
+            // other links were processed by temp pointer in that level preserving dummy node initial position
+            head = dummyNodeHead.next; 
+            // in the last level, since both if condition inside 2nd while loop won't execute so 
+            // temp will not move hence, dummyNodeHead will also be unchanged, so next pointer of it will be null
+            // thus when we do head=dummyNodeHead.next, this will give null & hence terminates the 1st while loop
         }
+        
         return root;
     }
 }
