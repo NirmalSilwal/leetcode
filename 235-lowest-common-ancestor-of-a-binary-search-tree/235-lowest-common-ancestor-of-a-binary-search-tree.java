@@ -9,8 +9,9 @@
  */
 
 class Solution {
+    /*
+    // 1st approach with extra space
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        
         List<TreeNode> pathp = new ArrayList<>();
         List<TreeNode> pathq = new ArrayList<>();
         
@@ -42,6 +43,7 @@ class Solution {
         return result;
     }
     
+    // dfs
     private void searchPath(TreeNode root, TreeNode node, List<TreeNode> path) {
         
         if (root.val == node.val) {
@@ -58,5 +60,20 @@ class Solution {
             path.add(root);
             searchPath(root.right, node, path);
         }
+    }
+    */
+
+    // 2nd approach
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        
+        if (root == null) return null;
+        
+        if (p.val < root.val && q.val < root.val)
+            return lowestCommonAncestor(root.left, p, q);
+        
+        else if (p.val > root.val && q.val > root.val)
+            return lowestCommonAncestor(root.right, p, q);
+        else 
+            return root;
     }
 }
