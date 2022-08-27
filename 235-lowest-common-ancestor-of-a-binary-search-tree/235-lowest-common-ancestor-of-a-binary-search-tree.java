@@ -63,7 +63,9 @@ class Solution {
     }
     */
 
-    // 2nd approach
+    /*
+    // 2nd approach, recursive solution, 
+    // O(N) time, O(N) space
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         
         if (root == null) return null;
@@ -76,4 +78,25 @@ class Solution {
         else 
             return root;
     }
+    */
+    
+    // 3rd approach, iterative solution
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        
+        TreeNode currentNode = root;
+        
+        while (currentNode != null) {
+            
+            int parentValue = currentNode.val;
+            
+            if (p.val > parentValue && q.val > parentValue)
+                currentNode = currentNode.right;
+            
+            else if (p.val < parentValue && q.val < parentValue)
+                currentNode = currentNode.left;
+            else 
+                return currentNode;
+        }
+        return null;
+    }    
 }
