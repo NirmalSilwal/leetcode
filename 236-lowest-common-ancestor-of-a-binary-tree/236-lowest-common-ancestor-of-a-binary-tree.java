@@ -8,19 +8,18 @@
  * }
  */
 class Solution {
-    
-    // recursive solution
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || root == p || root == q)
-            return root;
         
-        TreeNode left = lowestCommonAncestor(root.left, p, q);
-        TreeNode right = lowestCommonAncestor(root.right, p, q);
-
-        if (left == null)
-            return right;
-        else if (right == null)
-            return left;
+        if (root == null || root == p || root == q) 
+            return root;
+     
+        TreeNode leftSearch = lowestCommonAncestor(root.left, p, q);
+        TreeNode rightSearch = lowestCommonAncestor(root.right, p, q);
+        
+        if (leftSearch == null)
+            return rightSearch;
+        if (rightSearch == null)
+            return leftSearch;
         else
             return root;
     }
