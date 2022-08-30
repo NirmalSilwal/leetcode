@@ -41,6 +41,7 @@ class Solution {
   */
     
     // 2nd approach using inorder traversal since it gives output in ascending order
+    /*
     public int kthSmallest(TreeNode root, int k) {
         
         List<Integer> inorderList = new ArrayList<>();
@@ -57,5 +58,30 @@ class Solution {
         inorder(root.left, list);
         list.add(root.val);
         inorder(root.right, list);
+    }
+    */
+    
+    // 3rd approach, optimizing 2nd approach
+    private int count = 0;
+    private int kth = -1;    
+    
+    public int kthSmallest(TreeNode root, int k) {               
+        inorder(root, k); 
+        return kth;
+    }
+ 
+    private void inorder(TreeNode root, int k) {
+        
+        if (root == null) return;
+        
+        inorder(root.left, k);
+        
+        count++;
+        if (count == k) {
+            kth = root.val;
+            return;
+        }
+        
+        inorder(root.right, k);
     }
 }
