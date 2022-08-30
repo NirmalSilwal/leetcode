@@ -15,6 +15,7 @@
  */
 class Solution {
     // 1st approach using min heap
+    /*
     public int kthSmallest(TreeNode root, int k) {
         
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
@@ -26,7 +27,6 @@ class Solution {
         for (int i = 1; i <= k; i++) {
             kth = minHeap.poll();
         }
-        
         return kth;
     }
     
@@ -35,9 +35,27 @@ class Solution {
         if (root == null) return;        
         
         minHeap.add(root.val);
-        
         dfs(root.left, minHeap);
-        
         dfs(root.right, minHeap);
+    }
+  */
+    
+    // 2nd approach using inorder traversal since it gives output in ascending order
+    public int kthSmallest(TreeNode root, int k) {
+        
+        List<Integer> inorderList = new ArrayList<>();
+        
+        inorder(root, inorderList);
+        
+        return inorderList.get(k - 1);
+    }
+         
+    private void inorder(TreeNode root, List<Integer> list) {
+        if (root == null) return;
+        
+        // left, node, right
+        inorder(root.left, list);
+        list.add(root.val);
+        inorder(root.right, list);
     }
 }
