@@ -1,42 +1,41 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> spiral = new ArrayList<>();
         
-        int  top = 0, left = 0, right = matrix[0].length - 1;
-        int bottom = matrix.length - 1;
+        List<Integer> ans = new ArrayList<>();
         
+        int top = 0, bottom = matrix.length - 1;
+        int left = 0, right = matrix[0].length - 1;
         
         while (left <= right && top <= bottom) {
-            
-            // traverse left to right
+            // traverse left to right first
             for (int i = left; i <= right; i++) {
-                spiral.add(matrix[top][i]);
+                ans.add(matrix[top][i]);
             }
             top++;
-
-            // traverse top to bottom
-            for (int i = top; i <= bottom; i++) {
-                spiral.add(matrix[i][right]);
-            }        
-            right--;
-
-            if (left > right || top > bottom)
-                break;
             
-            // traverse right to left
+            // top to bottom
+            for (int i = top; i <= bottom; i++) {
+                ans.add(matrix[i][right]);
+            }
+            right--;
+            
+            // now since top and right pointer have changed, recheck our initial condition
+            if (left > right || top > bottom)
+                return ans;
+            
+            // right to left
             for (int i = right; i >= left; i--) {
-                spiral.add(matrix[bottom][i]);
+                ans.add(matrix[bottom][i]);
             }
             bottom--;
-
-            // traverse bottom to top
+            
+            // bottom to top
             for (int i = bottom; i >= top; i--) {
-                spiral.add(matrix[i][left]);
+                ans.add(matrix[i][left]);
             }
             left++;
-            
         }
         
-        return spiral;
+        return ans;
     }
 }
