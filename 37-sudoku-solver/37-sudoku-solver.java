@@ -1,38 +1,36 @@
 class Solution {
     public void solveSudoku(char[][] board) {
-        sudokuHelper(board, 0, 0);
+        helper(board, 0, 0); 
     }
     
-    private boolean sudokuHelper(char[][] board, int row, int col) {
-        if (row == board.length) { // when all row is done traversing, we reach outside board and then return
+    private boolean helper(char[][] board, int row, int col) {
+        if (row == board.length) 
             return true;
-        }
-        int nextRow = 0;
-        int nextCol = 0;
+        
+        int nextRow = 0, nextCol = 0;
         
         if (col == board[0].length - 1) { // last column
-            nextRow = row + 1;
             nextCol = 0;
+            nextRow = row + 1;
         } else {
-            nextRow = row;
             nextCol = col + 1;
+            nextRow = row;
         }
         
-        if (board[row][col] != '.') { // if there is already digit in that position, skip it and check for next position
-            if (sudokuHelper(board, nextRow, nextCol)) {
+        if (board[row][col] != '.') {
+            if (helper(board, nextRow, nextCol))
                 return true;
-            }
         } else {
-            for (char possibleOption = '1'; possibleOption <= '9'; possibleOption++) { // exploring all possible digit
+            for (char ch = '1'; ch <= '9'; ch++) {
                 
-                if (isValid(board, row, col, possibleOption)) { // if it is valid option to put in this blank position
-
-                    board[row][col] =  possibleOption;
-
-                    if (sudokuHelper(board, nextRow, nextCol)) {
+                if (isValidBoardPosition(board, row, col, ch)) {
+                    
+                    board[row][col] = ch;
+                    
+                    if (helper(board, nextRow, nextCol)) {
                         return true;
                     } else {
-                        board[row][col] = '.'; // backtrack
+                        board[row][col] = '.'; // backtrack to previous state
                     }
                 }
             }
@@ -40,28 +38,23 @@ class Solution {
         return false;
     }
     
-    private boolean isValid(char[][] board, int x, int y, char value) {
-        
+    private boolean isValidBoardPosition(char[][] board, int row, int col, char digit) {
+        // check digit in current row and col first
         for (int i = 0; i < board.length; i++) {
-            // checking if given value is already present in current row and columns
-            if (board[x][i] == value) return false;
-            
-            if (board[i][y] == value) return false;            
+            if (board[i][col] == digit) return false;
+            if (board[row][i] == digit) return false;
         }
-
-        // now checking in sub-matrix
-        int smi = x / 3 * 3; // starting row postion of sub-matrix
-        int smj = y / 3 * 3; // starting column position of sub-matrix
         
-        // looping the small submatrix only for presence of desired value
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i + smi][j + smj] == value) 
+        // check in sub-matrix
+        int srow = row / 3 * 3;
+        int scol = col / 3 * 3;
+        
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                if (board[r + srow][c + scol] == digit)
                     return false;
             }
         }
-        
-        // if not found
         return true;
     }
 }
