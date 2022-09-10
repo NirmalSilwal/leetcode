@@ -15,6 +15,7 @@
  */
 class Solution {
     // approach 1 idea - using bfs, in queue last element in each level will be right view
+    /*
     public List<Integer> rightSideView(TreeNode root) {
         
         List<Integer> view = new ArrayList<>();       
@@ -43,5 +44,29 @@ class Solution {
         }   
         return view;
     }
+    */
+    // approach 2 - recursive
+    public List<Integer> rightSideView(TreeNode root) {       
+        
+        List<Integer> view = new ArrayList<>();       
+        
+        if (root == null) return view; 
+                
+        rightView(root, view, 0);
+        
+        return view;
+    }
     
+    private void rightView(TreeNode root, List<Integer> view, int currentLevel) {
+        if (root == null)
+            return;
+        
+        if (currentLevel == view.size()) {
+            view.add(root.val);
+        }
+        
+        rightView(root.right, view, currentLevel + 1);
+        
+        rightView(root.left, view, currentLevel + 1);
+    }
 }
