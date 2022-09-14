@@ -1,38 +1,45 @@
 class Solution {
+    // approach 1 - using two Stacks
     public String decodeString(String s) {
-        Stack<Integer> numStack = new Stack<>();
-        Stack<StringBuilder> strStack = new Stack<>();
         
-        StringBuilder sb = new StringBuilder(); // hold temporary string
-        int num = 0;
+        Stack<Integer> intStack = new Stack<>();
+        Stack<String> strStack = new Stack<>();
         
-        for (char ch : s.toCharArray()) {
-            // 4 types of character - digits, alphabets, open and closed brackets
-            if (ch >= '0' && ch <= '9') {
-                num = num * 10 + ch - '0';
-                          
-            } else if (ch == '[') {
-                strStack.push(sb);    
-                sb = new StringBuilder();
-                
-                numStack.push(num);
-                num = 0;
-                
-            } else if (ch == ']') {
-                StringBuilder temp = sb;
-                sb = strStack.pop();
-                int count = numStack.pop();
-                
-                while (count-- > 0) {
-                    sb.append(temp);
-                }
+        int ptr = 0;
+        String result = "";
+        
+        while (ptr < s.length()) {
+            char curr = s.charAt(ptr);
             
+            if (Character.isDigit(curr)) {
+                int num = 0; // iterate till that number ends, like 3435[aa]
+                while (Character.isDigit(s.charAt(ptr))) {
+                    num = num * 10 + s.charAt(ptr) - '0';
+                    ptr++;
+                }
+                intStack.push(num);
+                
+            } else if (curr == '[') {
+                strStack.push(result);
+                result = "";
+                ptr++;
+                
+            } else if (curr == ']') {
+                StringBuilder sb = new StringBuilder(strStack.pop());
+                int count = intStack.pop();
+                while (count-- > 0) {
+                   sb.append(result); 
+                }
+                result = sb.toString();
+                ptr++;
+                
             } else {
-                // if it is a character 
-                sb.append(ch);
+                // if alphabets
+                result += curr; // append current character to result
+                ptr++; // move to next index in given string
             }
         }
-     
-        return sb.toString();
+        
+        return result;
     }
 }
