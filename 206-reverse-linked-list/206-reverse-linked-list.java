@@ -9,7 +9,7 @@
  * }
  */
 class Solution {
-    public ListNode reverseList(ListNode head) {
+    public ListNode reverseListIterative(ListNode head) {
         if (head == null || head.next == null) return head;
         
         ListNode prev = null, curr = head, nxt = head.next;
@@ -27,4 +27,17 @@ class Solution {
         
         return head;
     }
+        
+    // follow-up : recursive solution
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        
+        ListNode remainingAnswer = reverseList(head.next);
+        
+        head.next.next = head;
+        head.next = null;
+        
+        return remainingAnswer;
+    }
+
 }
