@@ -15,18 +15,22 @@
  */
 class Solution {
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        return helper(root, targetSum);
+        return helper(root, targetSum, 0);
     }
     
-    private boolean helper(TreeNode root, int target) {
+    private boolean helper(TreeNode root, int target, int currsum) {
         if (root == null) return false;
         
         // leaf node
-        if (target == root.val && root.left == null && root.right == null) 
-            return true;
+        if (root.left == null && root.right == null) {
+        // adding current leaf node value also since in recursive call it has sum upto its parent node
+            currsum += root.val; 
+            if (currsum == target)
+                return true;
+        }
         
-        boolean leftscan = helper(root.left, target - root.val);
-        boolean rightscan = helper(root.right, target - root.val);
+        boolean leftscan = helper(root.left, target, currsum + root.val);
+        boolean rightscan = helper(root.right, target, currsum + root.val);
         
         return leftscan || rightscan;
     }
