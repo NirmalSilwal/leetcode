@@ -1,28 +1,27 @@
 class Solution {
-    // 1st approach
     public List<List<Integer>> combinationSum3(int k, int n) {
         Set<List<Integer>> set = new HashSet<>();
         helper(set, k, n, new HashSet<Integer>());
         return new ArrayList<>(set);
     }
     
-    private void helper(Set<List<Integer>> set, int totalNums, int requiredSum, Set<Integer> currset) {
-        
-        if (totalNums == 0) {
-            if (requiredSum == 0) {
-                set.add(new ArrayList<>(currset));
+    private void helper(Set<List<Integer>> set, int k, int reqsum, Set<Integer> curr) {
+        if (k == 0) {
+            if (reqsum == 0) {
+                set.add(new ArrayList<>(curr));
                 return;
-            } else
+            } else {
                 return;
+            }
         }
-        if (requiredSum < 0)
-            return;
         
-        for (int i = 1; i <= 9; i++) {
-            if (!currset.contains(i)) {
-                currset.add(i);
-                helper(set, totalNums - 1, requiredSum - i, currset);
-                currset.remove(i); // backtrack
+        if (reqsum < 0) return;
+        
+        for (int num = 1; num <= 9; num++) {
+            if (!curr.contains(num)) {
+                curr.add(num);
+                helper(set, k - 1, reqsum - num, curr);
+                curr.remove(num);
             }
         }
     }
