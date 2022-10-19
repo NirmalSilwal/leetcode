@@ -15,7 +15,8 @@ class Solution {
             } else
                 return;
         }
-       
+        if (requiredSum < 0)
+            return;
         
         for (int i = 1; i <= 9; i++) {
             if (!currset.contains(i)) {
