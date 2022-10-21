@@ -1,27 +1,29 @@
 class Solution {
-    // maximum length of subarray with sum = (total - x)
+    // using prefix sum with hashmap
+    // longest consecutive array with sum = total - target 
+    // target = left side + right side removed elements
     public int minOperations(int[] nums, int x) {
         
-        int target = Arrays.stream(nums).sum();
-        target -= x;
+        int targetSum = Arrays.stream(nums).sum() - x;
         
-        if (target == 0) return nums.length;
+        Map<Integer, Integer> map = new HashMap<>(); // prefix sum, index in nums
+        map.put(0, -1);
         
-        Map<Integer, Integer> map = new HashMap<>(); // prefix sum, index at array
-        map.put(0, -1); // prefix sum zero at index -1
+        int operations = -1; // max length subarray
+        int runningSum = 0;
         
-        int result = -1, prefixSum = 0;
-        
-        for (int i = 0; i < nums.length; i++) {
-           
-            prefixSum += nums[i];
+        for (int index = 0; index < nums.length; index++) {
             
-            if (map.containsKey(prefixSum - target)) {
-                result = Math.max(result, i - map.get(prefixSum - target));
+            runningSum += nums[index];
+            
+            map.put(runningSum, index);
+           
+            if (map.containsKey(runningSum - targetSum)) {
+                operations = Math.max(operations, index - map.get(runningSum - targetSum));
             }
-            map.put(prefixSum, i);
+            
         }
-        
-        return result == -1 ? -1 : nums.length - result;
+         
+        return operations == -1 ? -1 : nums.length - operations;
     }
 }
