@@ -19,7 +19,7 @@ class Node {
 
 class Solution {
     // using BFS
-    public int maxDepth(Node root) {
+    public int maxDepth1(Node root) {
         
         if (root == null) return 0;
         
@@ -38,7 +38,25 @@ class Solution {
             }
             depth++;
         }
-        
         return depth;
+    }
+    
+    // using DFS
+    private int depth;
+    public int maxDepth(Node root) {
+        if (root == null) return 0;
+        helper(root, 1); // current node, level
+        return depth;
+    }
+    
+    private void helper(Node root, int level) {
+        if (root == null) return;
+        
+        depth = Math.max(depth, level);
+        
+        for (Node child : root.children) {
+            helper (child, level + 1);
+        }
+        
     }
 }
