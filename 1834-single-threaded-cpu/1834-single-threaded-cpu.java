@@ -7,10 +7,10 @@ class Solution {
         for (int i = 0; i < n; i++) {
             taskWithIndex[i] = new Task(i, tasks[i][0], tasks[i][1]);
         }
-        // Arrays.sort(taskWithIndex, (a, b) -> a[1] - b[1]);
-        Arrays.sort(taskWithIndex, (a, b) -> {
-            return Integer.compare(a.enqueueTime, b.enqueueTime);
-        });
+        Arrays.sort(taskWithIndex, (a, b) -> a.enqueueTime - b.enqueueTime);
+        // Arrays.sort(taskWithIndex, (a, b) -> {
+        //     return Integer.compare(a.enqueueTime, b.enqueueTime);
+        // });
         
         PriorityQueue<Task> minHeap = new PriorityQueue<>((a, b) -> {
             if (a.processingTime == b.processingTime) 
