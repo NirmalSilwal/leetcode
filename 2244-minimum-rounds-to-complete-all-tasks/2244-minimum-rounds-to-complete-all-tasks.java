@@ -1,5 +1,6 @@
 class Solution {
-    public int minimumRounds(int[] tasks) {
+    
+    public int minimumRounds1(int[] tasks) {
         
         if (tasks.length < 2) return -1;
 
@@ -37,6 +38,33 @@ class Solution {
 
         return counts == 1 ? ++rounds : rounds;
     }
+    
+    // optimal - O(N) time O(N) space
+    public int minimumRounds(int[] tasks) {
+        
+        if (tasks.length < 2) return -1;
+        
+        Map<Integer, Integer> map = new HashMap<>();
+        
+        for (int task : tasks) {
+            map.put(task, map.getOrDefault(task, 0) + 1);
+        }
+        
+        int rounds = 0;
+        for (int counts : map.values()) {
+            
+            if (counts < 2) return -1;
+            
+            if (counts % 3 == 0) {
+                rounds += counts / 3;
+            } else {
+                rounds += counts / 3 + 1;
+            }
+        }
+        
+        return rounds;
+    }
+    
 }
 
 /*
