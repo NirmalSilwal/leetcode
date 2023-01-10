@@ -42,11 +42,12 @@ class Solution {
                 if (first.right.val != second.right.val) return false;
             }
             
-            if (first.left == null && second.left != null 
-                || first.left != null && second.left == null                  
-                || first.right == null && second.right != null 
-                || first.right != null && second.right == null)
-                return false;
+        //     if (first.left == null && second.left != null 
+        //         || first.left != null && second.left == null                  
+        //         || first.right == null && second.right != null 
+        //         || first.right != null && second.right == null)
+        //         return false;
+            
         }
         
         return true;
