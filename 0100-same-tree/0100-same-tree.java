@@ -14,8 +14,9 @@
  * }
  */
 class Solution {
+    // 1st approach
     // 1st idea - find inorder traversal of both tree and compare that 
-    public boolean isSameTree(TreeNode p, TreeNode q) {
+    public boolean isSameTree1(TreeNode p, TreeNode q) {
         
         List<TreeNode> inorderP = new ArrayList<>();
         inorder(p, inorderP);
@@ -40,19 +41,13 @@ class Solution {
             if (first.right != null) {
                 if (second.right == null) return false;
                 if (first.right.val != second.right.val) return false;
-            }
-            
-        //     if (first.left == null && second.left != null 
-        //         || first.left != null && second.left == null                  
-        //         || first.right == null && second.right != null 
-        //         || first.right != null && second.right == null)
-        //         return false;
-            
+            } 
         }
         
         return true;
     }
 
+    // 2nd approach
     // LNR, Left Node Right
     private void inorder(TreeNode root, List<TreeNode> list) {
         if (root == null) return;
@@ -60,5 +55,19 @@ class Solution {
         inorder(root.left, list);
         list.add(root);
         inorder(root.right, list);
+    }
+    
+    // recursive approach
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        
+        if (p == null && q == null) return true;
+        
+        if (p == null && q != null || p != null && q == null || p.val != q.val) 
+            return false;
+        
+        boolean leftAnswer = isSameTree(p.left, q.left);
+        boolean rightAnswer = isSameTree(p.right, q.right);
+    
+        return leftAnswer && rightAnswer;
     }
 }
