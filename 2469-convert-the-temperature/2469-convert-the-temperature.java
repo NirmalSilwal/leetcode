@@ -1,5 +1,5 @@
 class Solution {
-    public double[] convertTemperature(double celsius) {
+    public double[] convertTemperature1(double celsius) {
         
         double[] ans = new double[2];
 
@@ -8,4 +8,10 @@ class Solution {
 
         return ans;
     }
+    
+    public double[] convertTemperature(double celsius) {
+        
+        return new double[]{celsius + 273.15, celsius * 1.80 + 32.00};   
+    }
+    
 }
