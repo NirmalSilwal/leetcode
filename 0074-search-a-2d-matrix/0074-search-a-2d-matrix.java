@@ -1,32 +1,24 @@
 class Solution {
-    // brute force - O(mn) time, O(1) space
-    public boolean searchMatrix1(int[][] matrix, int target) {
-        for (int row = 0; row < matrix.length; row++) {
-            for (int col = 0; col < matrix[row].length; col++) {
-                if (matrix[row][col] == target) return true;
-            }
-        }
-        return false;
-    }
-    
-    // 2nd approach
+    // using binary search technique as matrix is sorted row-wise
     public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0) return false;
         
-        int row = matrix.length - 1, col = 0;
+        int totalRows = matrix.length, totalCols = matrix[0].length;
+        int low = 0, high = totalRows * totalCols - 1;
         
-        while (row >= 0 && col < matrix[0].length) {
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
             
-            int curr = matrix[row][col];
-           
-            if (curr == target) {
-                return true;
-            } else if (target > curr) {
-                col++; // search in that row
-            } else {
-                row--;
-            }
+            int currentRow = mid / totalCols;
+            int currentCol = mid % totalCols;
+            
+            int midValue = matrix[currentRow][currentCol];
+            
+            if (target == midValue) return true;
+            else if (target > midValue) low = mid + 1;
+            else high = mid - 1;
         }
         
-        return false;
+        return false; // if target element is not found
     }
 }
