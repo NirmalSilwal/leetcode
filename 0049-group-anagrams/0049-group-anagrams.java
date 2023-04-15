@@ -1,54 +1,31 @@
 class Solution {
-    public List<List<String>> groupAnagrams1(String[] strs) {
-        
-        List<List<String>> result = new ArrayList<>();
-        Map<String, List<String>> map = new HashMap();
-
-        for (String curr : strs) {
-
-            char[] chars = curr.toCharArray();
-            Arrays.sort(chars);
-            String sortedCurr = new String(chars);
-
-            if (!map.containsKey(sortedCurr)) {
-                List<String> currGroup = new ArrayList<>();
-                map.put(sortedCurr, currGroup);
-            }
-            map.get(sortedCurr).add(curr);
-        }
-        result.addAll(map.values());
-
-        return result;
-    }
-    
-    // 2nd approach
     public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> result = new ArrayList();
+        Map<String, List<String>> groupMap = new HashMap();
         
-        List<List<String>> result = new ArrayList<>();
-        Map<String, List<String>> map = new HashMap();
-
-        for (String curr : strs) {
-
-            int[] charcounts = new int[26];
-            for (char ch : curr.toCharArray()) {
-                charcounts[ch - 'a']++;
+        for (String current : strs) {
+            int[] charCount = new int[26];
+            for (char ch : current.toCharArray()) {
+                charCount[ch - 'a']++;
             }
             
             StringBuilder sb = new StringBuilder();
-            for (int count : charcounts) {
+            for (int count : charCount) {
                 sb.append(count);
                 sb.append("#");
             }
             
-            String newkey = sb.toString();
-
-            if (!map.containsKey(newkey)) {
-                map.put(newkey, new ArrayList<>());
+            String newKey = sb.toString();
+            
+            if (!groupMap.containsKey(newKey)) {
+                groupMap.put(newKey, new ArrayList<String>());
             }
-            map.get(newkey).add(curr);
+            
+            groupMap.get(newKey).add(current);
         }
-        result.addAll(map.values());
-
+        
+        result.addAll(groupMap.values());
+        
         return result;
     }
 }
