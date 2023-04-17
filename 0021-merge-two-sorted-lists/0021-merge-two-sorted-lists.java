@@ -14,34 +14,24 @@ class Solution {
         if (list1 == null) return list2;
         if (list2 == null) return list1;
 
-        ListNode merged = new ListNode(-1);
-        ListNode dummyHead = merged;
-        ListNode ptr1 = list1, ptr2 = list2;
+        ListNode dummy = new ListNode(-1);
+        ListNode current = dummy;
 
-        while (ptr1 != null && ptr2 != null) {
-            if (ptr1.val <= ptr2.val) {
-                merged.next = new ListNode(ptr1.val);
-                ptr1 = ptr1.next;
-                merged = merged.next;
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                current.next = list1;
+                list1 = list1.next;
             } else {
-                merged.next = new ListNode(ptr2.val);
-                ptr2 = ptr2.next;
-                merged = merged.next;
+                current.next = list2;
+                list2 = list2.next;
             }
+            current = current.next;
         }
 
-        while (ptr1 != null) {
-            merged.next = new ListNode(ptr1.val);
-            ptr1 = ptr1.next;
-            merged = merged.next;
-        }
+        // if two list are of different length
+        if (list1 != null) current.next = list1;
+        if (list2 != null) current.next = list2;
 
-         while (ptr2 != null) {
-            merged.next = new ListNode(ptr2.val);
-            ptr2 = ptr2.next;
-            merged = merged.next;
-        }
-        
-        return dummyHead.next;
+        return dummy.next;
     }
 }
