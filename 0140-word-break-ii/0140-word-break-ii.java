@@ -1,4 +1,6 @@
+import java.util.HashSet;
 class Solution {
+    Map<String, List<String>> cacheMap = new HashMap();
     public List<String> wordBreak(String s, List<String> wordDict) {
         
         Set<String> set = new HashSet<String>();
@@ -8,6 +10,8 @@ class Solution {
     }
     
     private List<String> helper(String s, Set<String> set) {
+        
+        if (cacheMap.containsKey(s)) return cacheMap.get(s);
         
         List<String> result = new ArrayList<>();
         
@@ -25,6 +29,8 @@ class Solution {
                 }
             }
         }
+        
+        cacheMap.put(s, result);
         
         return result;
     }
