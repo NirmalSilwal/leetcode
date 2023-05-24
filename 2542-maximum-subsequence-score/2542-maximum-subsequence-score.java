@@ -22,7 +22,7 @@ class Solution {
         long runningSum = 0;
         long result = 0;
         // to keep track of minimum value in running sum from nums1
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>(k, (a, b) -> a - b);
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(k);
 
         for (Pair<Integer, Integer> currentPair : pairList) {
             
