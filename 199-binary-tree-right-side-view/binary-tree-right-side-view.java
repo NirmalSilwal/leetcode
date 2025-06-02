@@ -14,6 +14,7 @@
  * }
  */
 class Solution {
+    // expanding the logic of level order traversal
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         if (root == null) return result;
