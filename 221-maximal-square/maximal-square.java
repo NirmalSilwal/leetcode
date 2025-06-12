@@ -15,11 +15,7 @@ class Solution {
                 }
                 
                 // only try to grow the square if we're not at the border
-                if (i > 0 && j > 0 
-                    && matrix[i-1][j] == '1' // top
-                    && matrix[i][j-1] == '1' // left
-                    && matrix[i-1][j-1] == '1') { // top-left
-
+                if (i > 0 && j > 0 ) { 
                     dp[i][j] = 1 + Math.min(dp[i-1][j-1], Math.min(dp[i][j-1], dp[i-1][j]));
                 }
                 maxSquare = Math.max(dp[i][j], maxSquare);
