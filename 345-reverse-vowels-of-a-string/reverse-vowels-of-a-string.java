@@ -23,7 +23,7 @@ class Solution {
             }
             
         }
-        return String.valueOf(arr);
+        return new String(arr);
     }
 
     private boolean isVowel(char letter) {
