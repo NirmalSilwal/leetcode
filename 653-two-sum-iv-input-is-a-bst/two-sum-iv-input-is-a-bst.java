@@ -15,20 +15,28 @@
  */
 class Solution {
     public boolean findTarget(TreeNode root, int k) {
-        Set<Integer> seen = new HashSet<>();
-        return dfs(root, k, seen);
+        List<Integer> nodeList = new ArrayList<>();
+        inorder(root, nodeList);
+
+        int head = 0, tail = nodeList.size() - 1;
+
+        while (head < tail) {
+            int sum = nodeList.get(head) + nodeList.get(tail);
+            if (sum == k) return true;
+            if (sum < k) {
+                head++;
+            } else {
+                tail--;
+            }
+        }
+        return false;
     }
 
-    private boolean dfs(TreeNode node, int k, Set<Integer> seen) {
+    private void inorder(TreeNode root, List<Integer> nodeList) {
+        if (root == null) return; // LNR: left node right
 
-        if (node == null) return false;
-
-        int targetSum = k - node.val;
-        if (seen.contains(targetSum)) {
-            return true;
-        }
-        seen.add(node.val);
-
-        return dfs(node.left, k, seen) || dfs(node.right, k, seen);
+        inorder(root.left, nodeList);
+        nodeList.add(root.val);
+        inorder(root.right, nodeList);
     }
 }
